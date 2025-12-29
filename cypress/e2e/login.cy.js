@@ -1,57 +1,62 @@
 describe('login', () => {
 
   beforeEach(() => {
-    // Initing Page
-    cy.start()
-    // Home Page Login Verifiction
+    cy.openPage()
     cy.url().should('include', '/')
   })
 
-  // Valid login
-  describe('Valid login', () => {
+  // ------------------ Successfull login ------------------ 
+  describe('Successfull login', () => {
 
     it('should login successfully', () => {
-      cy.login('student', 'Password123')
-      // home page login verifiction
+
+      cy.login(
+        Cypress.env('ADMIN_USER'),
+        Cypress.env('ADMIN_PASS')
+      )
       cy.url().should('include', '/logged-in-successfully')
 
-      // verifiction login
       cy.get('h1.post-title')
         .should('be.visible')
         .and('contain.text', 'Logged In Successfully')
+
+      cy.contains('a', 'Log out')
+        .should('be.visible')
     })
   })
-  // Invalid login
+
+  // ------------------ Successfull login ------------------ 
+  const INVALID_USER = 'test'
+  const INVALID_PASS = 'pass'
+
   describe('Invalid login', () => {
 
-    // invalid e-mail
     it('should show error for invalid email', () => {
 
-      cy.login('estudante', 'Password123')
+      cy.login(
+        INVALID_USER,
+        Cypress.env('ADMIN_PASS')
+      )
 
-      // Error Message
       cy.get('#error')
         .should('be.visible')
         .and('contain.text', 'invalid')
 
-      // login page verifiction
       cy.url().should('include', '/practice-test-login/')
-
     })
 
-    // invalid password
     it('should show error for invalid password', () => {
 
-      cy.login('student', '123456')
+      cy.login(
+        Cypress.env('ADMIN_USER'),
+        INVALID_PASS
+      )
 
-      // Error Message
       cy.get('#error')
         .should('be.visible')
         .and('contain.text', 'invalid')
 
-      // login page verifiction
       cy.url().should('include', '/practice-test-login/')
-
     })
   })
 

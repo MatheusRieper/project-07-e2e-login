@@ -24,11 +24,9 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('start', () => {
+Cypress.Commands.add('openPage', () => {
 
-    // Resolution Page
     cy.viewport(1440, 900)
-    // starting page
     cy.visit('https://practicetestautomation.com/practice-test-login/')
 })
 
