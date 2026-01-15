@@ -1,0 +1,29 @@
+{
+    "invalid": 
+[
+    {
+    "scenario": "email invalid",
+    "email": "ema@gmail.com",
+    "password": "Password123",
+    "message": "Your username is invalid!"
+    },
+      {
+    "scenario": "password invalid",
+    "email": "student",
+    "password": "pass",
+    "message": "Your password is invalid!"
+    },
+      {
+    "scenario": "empty email field",
+    "email": "",
+    "password": "Password123",
+    "message": "Your username is invalid!"
+    },
+      {
+    "scenario": "empty password field",
+    "email": "student",
+    "password": "",
+    "message": "Your password is invalid!"
+    }
+]
+}

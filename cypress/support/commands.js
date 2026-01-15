@@ -32,15 +32,19 @@ Cypress.Commands.add('openPage', () => {
 
 Cypress.Commands.add('login', (email, password) => {
 
-    cy.get('#username')
-        .should('be.visible')
-        .clear()
-        .type(email)
+    if(email) {
+        cy.get('#username') .clear() .type(email)
+    }
+    else{
+         cy.get('#username') .clear() 
+    }
 
-    cy.get('#password')
-        .should('be.visible')
-        .clear()
-        .type(password)
+    if(password) {
+        cy.get('#password') .clear() .type(password)
+    }
+    else{
+        cy.get('#password') .clear()
+    }
 
     cy.get('#submit')
         .should('be.visible')

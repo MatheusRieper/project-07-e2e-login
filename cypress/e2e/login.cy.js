@@ -1,4 +1,4 @@
-describe('login', () => {
+describe('login', function () {
 
   beforeEach(() => {
     cy.openPage()
@@ -6,9 +6,9 @@ describe('login', () => {
   })
 
   // ------------------ Successfull login ------------------ 
-  describe('Successfull login', () => {
+  describe('Successfull login', function () {
 
-    it('should login successfully', () => {
+    it('should login successfully', function () {
 
       cy.login(
         Cypress.env('ADMIN_USER'),
@@ -26,37 +26,23 @@ describe('login', () => {
   })
 
   // ------------------ Successfull login ------------------ 
-  const INVALID_USER = 'test'
-  const INVALID_PASS = 'pass'
+  describe('Invalid login', function () {
 
-  describe('Invalid login', () => {
-
-    it('should show error for invalid email', () => {
-
-      cy.login(
-        INVALID_USER,
-        Cypress.env('ADMIN_PASS')
-      )
-
-      cy.get('#error')
-        .should('be.visible')
-        .and('contain.text', 'invalid')
-
-      cy.url().should('include', '/practice-test-login/')
+    beforeEach(() => {
+      cy.fixture('login').as('login')
     })
 
-    it('should show error for invalid password', () => {
+    it('should not with login unregistered', function () {
 
-      cy.login(
-        Cypress.env('ADMIN_USER'),
-        INVALID_PASS
-      )
+      this.login.invalid.forEach((data) => {
 
-      cy.get('#error')
-        .should('be.visible')
-        .and('contain.text', 'invalid')
+        cy.login(data.email, data.password)
 
-      cy.url().should('include', '/practice-test-login/')
+        cy.contains(data.message)
+
+        cy.reload()
+
+      })
     })
   })
 
